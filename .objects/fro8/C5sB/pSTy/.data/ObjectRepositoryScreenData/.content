@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryScreenData ContentHash="PNt99AmsRE2_KhjTh4LQ9g" Reference="ul4YECumVEm1ablx--PVPg/pSTy6qYs9UuBopNmJkITNw" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryScreenData.Data>
+    <TargetApp x:Key="TargetApp" Area="0, 0, 0, 0" BrowserType="Edge" ContentHash="hNkUWUYuLkqrbjhRfu1KVw" IconBase64="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAA4SURBVDhPY0i32n4AiP+TifeDDMAmQTQeZAbAADIbG0DWQ10DyMGjXhh0XiAHU8WA/eiCxOPtuwEl0a7qam5sogAAAABJRU5ErkJggg==" Reference="ul4YECumVEm1ablx--PVPg/pSTy6qYs9UuBopNmJkITNw" Selector="&lt;html app='msedge.exe' url='https://docs.google.com/forms/d/e/1FAIpQLSfuL0OLm9BJgbvaZEbjGqCr2rs5DJ4zVRV0i9jbBkfhZMahww/viewform' /&gt;" Title="Retail City form" Url="https://docs.google.com/forms/d/e/1FAIpQLSfuL0OLm9BJgbvaZEbjGqCr2rs5DJ4zVRV0i9jbBkfhZMahww/viewform">
+      <imageRef attrName="InformativeScreenshot" originalValue="587ee34ed26f54601fb548df1c92a994.jpg" xmlns="">093El2O3-FEq_0IfIOcyTbA</imageRef>
+    </TargetApp>
+  </ObjectRepositoryScreenData.Data>
+</ObjectRepositoryScreenData>
