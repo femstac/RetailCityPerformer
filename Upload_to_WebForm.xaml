@@ -3,11 +3,12 @@
     <x:Property Name="in_Member_ID" Type="InArgument(x:String)" />
     <x:Property Name="in_Amount_USD" Type="InArgument(x:Double)" />
     <x:Property Name="in_Amount_NGN" Type="InArgument(x:Double)" />
-    <x:Property Name="in_Unexpected_Transaction" Type="InArgument(x:String)" />
     <x:Property Name="in_Transaction_Date" Type="InArgument(x:String)" />
     <x:Property Name="in_Amount_Entry_NGN" Type="InArgument(x:String)" />
     <x:Property Name="in_Amount_Entry_USD" Type="InArgument(x:String)" />
+    <x:Property Name="in_Unexpected_Transactions" Type="InArgument(x:String)" />
   </x:Members>
+  <sap:VirtualizedContainerService.HintSize>688,458</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -100,7 +101,7 @@
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_11">
+  <Sequence sap:VirtualizedContainerService.HintSize="512,195.33333333333334" sap2010:WorkflowViewState.IdRef="Sequence_11">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -171,7 +172,7 @@
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
               </uix:NTypeInto>
-              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Unexpected Transactions'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="754,54" sap2010:WorkflowViewState.IdRef="NTypeInto_4" InteractionMode="DebuggerApi" ScopeIdentifier="842b9583-9c2c-4517-9c52-9b28356e7172" Text="[in_Unexpected_Transaction]" Version="V3">
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into 'Unexpected Transactions'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="754,54" sap2010:WorkflowViewState.IdRef="NTypeInto_4" InteractionMode="DebuggerApi" ScopeIdentifier="842b9583-9c2c-4517-9c52-9b28356e7172" Text="[in_Unexpected_Transactions]" Version="V3">
                 <uix:NTypeInto.Target>
                   <uix:TargetAnchorable BrowserURL="https://docs.google.com/forms/d/e/1FAIpQLSfuL0OLm9BJgbvaZEbjGqCr2rs5DJ4zVRV0i9jbBkfhZMahww/viewform" DesignTimeRectangle="598, 712, 664, 27" DesignTimeScaleFactor="1.1299999952316284" ElementType="InputBox" FriendlyName="'TEXTAREA'" FullSelectorArgument="&lt;webctrl tag='TEXTAREA' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TEXTAREA' type='' class='KHxj8b tL9Q4c' aaname='' /&gt;" Guid="9e45513a-13b1-42d8-aead-18cb8e902052" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAApwAAAAfCAYAAABK8B36AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAUySURBVHhe7dzfSxtZGMbx/ZO9iARFRWLZEULRZQ2EYC22hFaQIKEKtbCRphghhG2otCJIDG2pLSEXuYgXIu++58ckk0m2JOBc+f3AQWfmzMnJXD28c07+EAAAACBBBE4AAAAkisAJAACARBE4AQAAkCgCJwAAABJF4AQAAECiCJwAAABIFIETAAAAiRoEzmx6URaK5/4o4v5cdpYWZS5XlZ4/BQAAAExrEDibxYzMpfNSiaXKztsNmZsPZL/lTwAAAAAzGL5S71VlM70oy/tX/oTy1c3Us7r0/SkAAABgFiNrOC/3g5Eqp6tuZuXguzt2evK5nJdl85p9XtvKhuyc/fLXjLoU9PxaeeQmqT3TvhpcHdcnd1SVQsaMsys1f2XMz7rsZDPus9Irspw7ltadv6bsuOtlaZwVZc3PKfVkVyo/fQfrTlonu4Prc0uBbJYv3BKBe52LBu3su67taV2WZGE+I68v/bHqv8/rvfpswuTdu5CDXCApvXfSvL6VszqvPamUtmyf+PMAAAB4LEY3DfVrkjNVzlJ7WN18Obqu0716D6Rw2pZO95c0y1s2nBXq4bv46QOnGWezVJXq6ZV0/JURvuq6kK9Kq9uVm8tjya3offnaoOJqx9U+qad70mhH+jw9HozZ/7CtYTEjuRM358u32zrnMGTeSiUXnZsPi3rdPgev8Vz7bFTcmPff5SCrxxpsq/qZnXbVfWZknasdw8zrz6Icntak8fXWXwEAAHhcRgOnckFpWw40SM6lt+Q4mgQ7xxJoENt8P7rQs/lyReaW9qRpj6YPnMHbSFVxgp4GxeVMURr3/oT6dmDC4LAiasddKkoz0qfzTuce77N+JN/8sQmZzTdF2fnHBUrbf7UkrqCpYXJd579uKpThPVfyenX4nTonZvwNOYw+m2ZRUpFqsH2OsXkBAAA8RmOBU/oaBv2r57Fd62emUqghNJ4TP+1Fwtb0gbMwLCpOzVUffxcmVX13pE9Y4QxeVeXyx61E3nw7349kLZx/tyJZ8x1b/q/5rvbc8BW7/czskdy4Q6dflc3Id7LzjM8LAADgERoPnMpVEcd3rMfD3kA0sD1o4LyTm9M9yT5Z0c91Idi12QKncXMWGScdSLb0UXqD6qOrYG6+v3VrNe3reFfpNOds0B5UcHtS+Ss6l9EWvHHrWQmcAAAAzuTA+X/B0lY4IxtnQv+agPfwgdNWJtMb8qLRln5YloyFyWkD58DdrbQaexKYtaGvLvxJP87zuv0bzt0+h3xNmvuZkTWetm+uIp1ud6z1/LMhcAIAADizBc6p1nC6auFC9OeVTFXw79kD56Qw2Tsxu8VnCZxtOXgaSFAebgAy4vfZyuZqIMvpyO50s1tdA28QVjo9u3t/aVtqsQpwrzM8QeAEAABwZgucavIu9UXJfRiGLRtANai9/vRLOj+upPI80PFmD5zuZ5kykntzLi0dp1rKawDUcWYKnOHPPYVz7g4qnNFd6G6dpo41CM7Gubyw61n9Ws5Q/6MUzK70cJd6ty2Nkj6HyCYrAicAAIAzc+A01crf/w6n8r9Raa+nV2Rtty6HBf1/xsAp9z1pvNrwIVMDYu5IPp+41/f7X12XaQLn2JyX4ms4DbdmMxXbKNUsanieFByjv8OpY6bWd+XwCxVOAACAuImBEwAAAHgoBE4AAAAkisAJAACARBE4AQAAkCgCJwAAABJF4AQAAECiCJwAAABIFIETAAAAiSJwAgAAIFEETgAAACRqEDivr69pNBqNRqPRaLQHa47If9nGj7VeHoemAAAAAElFTkSuQmCC" InformativeScreenshot="2e5e15e55c8d2765b0b38664cf2e92f8.png" ScopeSelectorArgument="&lt;html app='msedge.exe' title='Retail City form' /&gt;" SearchSteps="FuzzySelector, Image" Version="V2" Visibility="Interactive">
                     <uix:TargetAnchorable.Anchors>

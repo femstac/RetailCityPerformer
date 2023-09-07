@@ -1,18 +1,15 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
-    <x:Property Name="in_Unexpected_Transaction" Type="InArgument(x:String)" />
     <x:Property Name="in_Transaction_Date" Type="InArgument(x:String)" />
     <x:Property Name="in_Amount_Entry_USD" Type="InArgument(x:String)" />
     <x:Property Name="in_Amount_Entry_NGN" Type="InArgument(x:String)" />
     <x:Property Name="in_Amount_NGN" Type="InArgument(x:Double)" />
     <x:Property Name="in_Member_ID" Type="InArgument(x:String)" />
     <x:Property Name="in_Amount_USD" Type="InArgument(x:Double)" />
+    <x:Property Name="in_Unexpected_Transactions" Type="InArgument(x:String)" />
   </x:Members>
-  <this:Process.in_Unexpected_Transaction>
-    <InArgument x:TypeArguments="x:String" />
-  </this:Process.in_Unexpected_Transaction>
   <this:Process.in_Transaction_Date>
     <InArgument x:TypeArguments="x:String" />
   </this:Process.in_Transaction_Date>
@@ -31,10 +28,13 @@
   <this:Process.in_Amount_USD>
     <InArgument x:TypeArguments="x:Double" />
   </this:Process.in_Amount_USD>
+  <this:Process.in_Unexpected_Transactions>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Process.in_Unexpected_Transactions>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>502,781.3333333333334</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>688,634</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="50">
@@ -75,6 +75,10 @@
       <x:String>System.ComponentModel</x:String>
       <x:String>UiPath.Database</x:String>
       <x:String>UiPath.Database.Activities</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Activities.Contracts</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>UiPath.Activities.System</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -133,72 +137,72 @@
       <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
       <AssemblyReference>UiPath.Database</AssemblyReference>
       <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>UiPath.Activities.Contracts</AssemblyReference>
+      <AssemblyReference>System.Net.Primitives</AssemblyReference>
+      <AssemblyReference>System.Net.HttpListener</AssemblyReference>
+      <AssemblyReference>System.Net.WebProxy</AssemblyReference>
+      <AssemblyReference>System.Net.NameResolution</AssemblyReference>
+      <AssemblyReference>System.Net.WebClient</AssemblyReference>
+      <AssemblyReference>System.Net.Requests</AssemblyReference>
+      <AssemblyReference>System.Net.ServicePoint</AssemblyReference>
+      <AssemblyReference>System.Net.WebHeaderCollection</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="512,752" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="450,661.3333333333334" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_test" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_Test_new" />
+    </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="450,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
-    <ui:Comment DisplayName="Comment (placeholder)" sap:VirtualizedContainerService.HintSize="450,56.666666666666664" sap2010:WorkflowViewState.IdRef="Comment_1" Text="//  Invoke steps of the process" />
-    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="450,54" sap2010:WorkflowViewState.IdRef="CommentOut_1">
-      <ui:CommentOut.Body>
-        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="450,164.66666666666666" sap2010:WorkflowViewState.IdRef="Sequence_11">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Upload_to_WebForm.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,54" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Upload_to_WebForm.xaml">
-            <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="in_Member_ID">
-                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Member_ID" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:Double" x:Key="in_Amount_USD">
-                <VisualBasicValue x:TypeArguments="x:Double" ExpressionText="in_Amount_USD" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:Double" x:Key="in_Amount_NGN">
-                <VisualBasicValue x:TypeArguments="x:Double" ExpressionText="in_Amount_NGN" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_Unexpected_Transaction">
-                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Unexpected_Transaction" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_Transaction_Date">
-                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Transaction_Date" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_Amount_Entry_NGN">
-                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Amount_Entry_NGN" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_Amount_Entry_USD">
-                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Amount_Entry_USD" />
-              </InArgument>
-            </ui:InvokeWorkflowFile.Arguments>
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-          </ui:InvokeWorkflowFile>
-        </Sequence>
-      </ui:CommentOut.Body>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-    </ui:CommentOut>
-    <Sequence DisplayName="Upload to PostgreSQL" sap:VirtualizedContainerService.HintSize="450,170.66666666666666" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="388,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Upload_to_WebForm.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,115.33333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Upload_to_WebForm.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Member_ID">[in_Member_ID]</InArgument>
+        <InArgument x:TypeArguments="x:Double" x:Key="in_Amount_USD">[in_Amount_USD]</InArgument>
+        <InArgument x:TypeArguments="x:Double" x:Key="in_Amount_NGN">[in_Amount_NGN]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Transaction_Date">[in_Transaction_Date]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Amount_Entry_NGN">[in_Amount_Entry_NGN]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Amount_Entry_USD">[in_Amount_Entry_USD]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Unexpected_Transactions">[in_Unexpected_Transactions]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:DatabaseConnect DisplayName="Connect to database" sap:VirtualizedContainerService.HintSize="388,60" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="System.Data.Odbc" DatabaseConnection="{x:Null}" ConnectionString="Driver={PostgreSQL ODBC Driver 15};server=Servers;port=5050;database=Retail_City_Transactions;uid=etl;pwd=demo_password" />
-    </Sequence>
+    </ui:InvokeWorkflowFile>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Upload_to_PostgreSQL.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,115.33333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Upload_to_PostgreSQL.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Transaction_Date">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Transaction_Date" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Amount_Entry_USD">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Amount_Entry_USD" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Amount_Entry_NGN">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Amount_Entry_NGN" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Double" x:Key="in_Amount_NGN">
+          <VisualBasicValue x:TypeArguments="x:Double" ExpressionText="in_Amount_NGN" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Member_ID">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Member_ID" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Double" x:Key="in_Amount_USD">
+          <VisualBasicValue x:TypeArguments="x:Double" ExpressionText="in_Amount_USD" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Unexpected_Transactions">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Unexpected_Transactions" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
   </Sequence>
 </Activity>
